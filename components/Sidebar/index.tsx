@@ -10,8 +10,6 @@ import {
   ChevronDown,
   ChevronUp,
   Home,
-  HomeIcon,
-  Icon,
   Layers3,
   LockIcon,
   LucideIcon,
@@ -25,8 +23,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
-//hello
+import { useState } from "react";
 interface props {}
 
 function SideBar() {
@@ -39,7 +36,7 @@ function SideBar() {
     (state) => state.global.isSidebarCollapsed,
   );
 
-  const sideBarClassNames = `fixed flex flex-col  h-[100%] justify-between shadow-xl transition-all duration-300 h-full 
+  const sideBarClassNames = `fixed flex flex-col  h-[100%] justify-between shadow-xl transition-all duration-300 
     z-40 dark:bg-black overflow-y-auto bg-white ${isSidebarCollapsed ? "w-0 hidden" : "w-64"} `;
 
   return (
@@ -150,6 +147,7 @@ function SideBar() {
           </>
         )}
       </div>
+    
     </div>
   );
 }
@@ -164,7 +162,7 @@ const SideBarLink = ({ href, icon: Icon, label }: SideBarLinkProps) => {
   const isActive =
     pathName === href || (pathName === "/" && href === "/dashboard");
 
-  const screenWidth = window.innerWidth;
+  //const screenWidth = window.innerWidth;
 
   return (
     <Link href={href} className="w-full">
