@@ -2,12 +2,7 @@ import { useGetTasksQuery, useUpdateTaskStatusMutation } from "@/state/api";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Task as TaskType } from "@/state/api";
-import {
-  EllipsisVertical,
-  MessageSquare,
-  MessageSquareMore,
-  Plus,
-} from "lucide-react";
+import { EllipsisVertical, MessageSquareMore, Plus } from "lucide-react";
 import { format } from "date-fns";
 import Image from "next/image";
 type BoardProps = {
@@ -22,6 +17,24 @@ const taskStatus = [
   "Ready for QA",
   "Done",
 ];
+
+const PriorityTag = ({ priority }: { priority: TaskType["priority"] }) => (
+  <div
+    className={`rounded-full px-2 py-1 text-xs font-semibold ${
+      priority === "Critical"
+        ? "bg-red-200 text-red-700"
+        : priority === "High"
+          ? "bg-yellow-200 text-yellow-700"
+          : priority === "Medium"
+            ? "bg-green-200 text-green-700"
+            : priority === "Low"
+              ? "bg-blue-200 text-blue-700"
+              : "bg-gray-200 text-gray-700"
+    }`}
+  >
+    {priority}
+  </div>
+);
 
 const BoardView = ({ id, setIsModalNewTaskOpen }: BoardProps) => {
   const {
@@ -153,23 +166,7 @@ const Task = ({ task }: TaskProps) => {
     : "";
 
   const numberOfComments = (task.comments && task.comments.length) || 0;
-  const PriorityTag = ({ priority }: { priority: TaskType["priority"] }) => (
-    <div
-      className={`rounded-full px-2 py-1 text-xs font-semibold ${
-        priority === "Critical"
-          ? "bg-red-200 text-red-700"
-          : priority === "High"
-            ? "bg-yellow-200 text-yellow-700"
-            : priority === "Medium"
-              ? "bg-green-200 text-green-700"
-              : priority === "Low"
-                ? "bg-blue-200 text-blue-700"
-                : "bg-gray-200 text-gray-700"
-      }`}
-    >
-      {priority}
-    </div>
-  );
+
   return (
     <div
       ref={(instance) => {
@@ -227,7 +224,7 @@ const Task = ({ task }: TaskProps) => {
             {task.assignee && (
               <Image
                 src={`/${task.assignee.profilePictureUrl}`}
-                alt={task.assignee.userName || "User Avatar"}
+                alt={task.assignee.username || "User Avatar"}
                 width={30}
                 height={30}
                 className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
@@ -236,7 +233,7 @@ const Task = ({ task }: TaskProps) => {
             {task.author && (
               <Image
                 src={`/${task.author.profilePictureUrl}`}
-                alt={task.author.userName || "User Avatar"}
+                alt={task.author.username || "User Avatar"}
                 width={30}
                 height={30}
                 className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"

@@ -24,7 +24,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-interface props {}
 
 function SideBar() {
   const [showProject, setShowProjects] = useState(true);
@@ -147,7 +146,6 @@ function SideBar() {
           </>
         )}
       </div>
-    
     </div>
   );
 }
