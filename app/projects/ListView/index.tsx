@@ -1,20 +1,9 @@
-import { useGetTasksQuery, User } from "@/state/api";
+import { Task, useGetTasksQuery, User } from "@/state/api";
 import React from "react";
 import { format } from "date-fns";
 type ListProps = {
   id: string;
   setIsModalNewTaskOpen: (isOpen: boolean) => void;
-};
-
-type TaskProps = {
-  id: number;
-  title: string;
-  assignee?: User;
-  author?: User;
-  priority: string;
-  status: string;
-  startDate: string;
-  dueDate: string;
 };
 
 function ListView({ id, setIsModalNewTaskOpen }: ListProps) {
@@ -24,8 +13,8 @@ function ListView({ id, setIsModalNewTaskOpen }: ListProps) {
     return format(new Date(date), "dd-MM-yyyy");
   };
 
-  const renderBodyList = (tasks: TaskProps[]) => {
-    return tasks.map((task: TaskProps) => (
+  const renderBodyList = (tasks: Task[]) => {
+    return tasks.map((task: Task) => (
       <tr
         key={task.id}
         className="border border-solid transition hover:bg-gray-50"
@@ -35,8 +24,10 @@ function ListView({ id, setIsModalNewTaskOpen }: ListProps) {
         <td className="border-r px-4 py-3">{task.author?.username}</td>
         <td className="border-r px-4 py-3">{task.priority}</td>
         <td className="border-r px-4 py-3">{task.status}</td>
-        <td className="border-r px-4 py-3">{formatDate(task.startDate)}</td>
-        <td className="px-4 py-3">{formatDate(task.dueDate)}</td>
+        <td className="border-r px-4 py-3">
+          {formatDate(task.startDate || "")}
+        </td>
+        <td className="px-4 py-3">{formatDate(task.dueDate || "")}</td>
       </tr>
     ));
   };
